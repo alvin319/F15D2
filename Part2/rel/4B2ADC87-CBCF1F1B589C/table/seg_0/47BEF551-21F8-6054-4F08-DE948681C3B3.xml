@@ -1,0 +1,76 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="47BEF551-21F8-6054-4F08-DE948681C3B3" name="team">
+<createdBy>WiNDWAY</createdBy>
+<createdTime>2015-11-22 05:49:25 UTC</createdTime>
+<generatorID>7A0F56E8-3DC2-5827-C62A-D94B0BED0AA6</generatorID>
+<ownerDesignName>Part2</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="T_ID" id="07293E1B-D5B0-7A70-DE8F-2F02BF00A120">
+<createdBy>WiNDWAY</createdBy>
+<createdTime>2015-11-22 05:49:25 UTC</createdTime>
+<generatorID>E36356C3-86B6-D111-BEF2-B68C895627DA</generatorID>
+<ownerDesignName>Part2</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NAME" id="6F3D11EF-3423-C837-0453-6C02623BE9E3">
+<createdBy>WiNDWAY</createdBy>
+<createdTime>2015-11-22 05:49:25 UTC</createdTime>
+<generatorID>1CCB91D0-A08B-C2DC-19D5-489A11509DAD</generatorID>
+<ownerDesignName>Part2</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="C_ID" id="8E9EDBD2-C77E-7218-D634-049A8DC36287">
+<createdBy>WiNDWAY</createdBy>
+<createdTime>2015-11-22 05:49:25 UTC</createdTime>
+<generatorID>425EF675-C0A1-096A-C800-CD1AA646AF7F</generatorID>
+<ownerDesignName>Part2</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="DC6EA31E-3399-B87C-DDEE-8FF96AD6DC65" referredColumn="5CC4C731-EB5A-9C86-30CA-2CE7A9273637"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="A69B0370-6A66-10FB-E5F7-6B6627E209BE" name="team_PK">
+<createdBy>WiNDWAY</createdBy>
+<createdTime>2015-11-22 05:49:25 UTC</createdTime>
+<generatorID>67FA678B-B94D-6760-A889-C395C5425A4A</generatorID>
+<ownerDesignName>Part2</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="07293E1B-D5B0-7A70-DE8F-2F02BF00A120"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="4B81A9C5-BA22-2B5A-4A00-BA9AB2584B4A" name="conference_team_FK">
+<createdBy>WiNDWAY</createdBy>
+<createdTime>2015-11-22 05:49:25 UTC</createdTime>
+<generatorID>417CFE95-9F19-3BD8-3A39-CB5A1BD575A9</generatorID>
+<ownerDesignName>Part2</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8E9EDBD2-C77E-7218-D634-049A8DC36287"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

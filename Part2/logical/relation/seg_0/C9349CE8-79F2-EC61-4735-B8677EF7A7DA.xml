@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="team_player" directorySegmentName="seg_0" id="C9349CE8-79F2-EC61-4735-B8677EF7A7DA">
+<createdBy>WiNDWAY</createdBy>
+<createdTime>2015-11-22 05:36:43 UTC</createdTime>
+<ownerDesignName>Part2</ownerDesignName>
+<engineerTo>
+<item key="4B2ADC87-2038-1DB4-7CB9-CBCF1F1B589C" value="true"/>
+</engineerTo>
+<sourcePk>67FA678B-B94D-6760-A889-C395C5425A4A</sourcePk>
+<identifying>false</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>7A0F56E8-3DC2-5827-C62A-D94B0BED0AA6</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>1739A3CA-B846-376A-FDD0-5D2FCEA570F1</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

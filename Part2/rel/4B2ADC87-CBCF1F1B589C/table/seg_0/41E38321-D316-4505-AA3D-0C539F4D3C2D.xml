@@ -1,0 +1,101 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="41E38321-D316-4505-AA3D-0C539F4D3C2D" name="player">
+<createdBy>WiNDWAY</createdBy>
+<createdTime>2015-11-22 05:49:25 UTC</createdTime>
+<generatorID>1739A3CA-B846-376A-FDD0-5D2FCEA570F1</generatorID>
+<ownerDesignName>Part2</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="P_ID" id="AD33417A-DD2C-1F92-B7EC-2A59BEF4989C">
+<createdBy>WiNDWAY</createdBy>
+<createdTime>2015-11-22 05:49:25 UTC</createdTime>
+<generatorID>7341011D-7FE0-0CA8-7E56-8D105B9F95CC</generatorID>
+<ownerDesignName>Part2</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NAME" id="063596F3-168F-239E-512B-9C7BAA3B7A57">
+<createdBy>WiNDWAY</createdBy>
+<createdTime>2015-11-22 05:49:25 UTC</createdTime>
+<generatorID>374D9F28-1289-644E-C604-7CB38AB46A07</generatorID>
+<ownerDesignName>Part2</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="POSITION" id="BA2B6293-6DC7-6B1F-292D-D6157B2A4EB8">
+<createdBy>WiNDWAY</createdBy>
+<createdTime>2015-11-22 05:49:25 UTC</createdTime>
+<generatorID>E03B65D9-DD8F-572E-C1AC-369CBB38E749</generatorID>
+<ownerDesignName>Part2</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="HEIGHT" id="1CA7AD36-2889-383A-ECE9-E365990F8559">
+<createdBy>WiNDWAY</createdBy>
+<createdTime>2015-11-22 05:49:25 UTC</createdTime>
+<generatorID>598A8C8A-1CBC-5931-CB28-A63E670BA7BD</generatorID>
+<ownerDesignName>Part2</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="T_ID" id="8EAF3217-4037-338E-29D5-39ECDE1D46FB">
+<createdBy>WiNDWAY</createdBy>
+<createdTime>2015-11-22 05:49:25 UTC</createdTime>
+<generatorID>EEE3E882-6EAD-C656-D948-239EA22E8B50</generatorID>
+<ownerDesignName>Part2</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="932AC809-F7B4-B780-E40A-207B05A73256" referredColumn="07293E1B-D5B0-7A70-DE8F-2F02BF00A120"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="1AC25D95-9932-D820-AB1F-0E9A8149AE30" name="player_PK">
+<createdBy>WiNDWAY</createdBy>
+<createdTime>2015-11-22 05:49:25 UTC</createdTime>
+<generatorID>D143E086-8145-3F30-808F-55B983693494</generatorID>
+<ownerDesignName>Part2</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="AD33417A-DD2C-1F92-B7EC-2A59BEF4989C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="7FB4E0A6-6475-5EB9-D3E0-3F1DF1211C16" name="team_player_FK">
+<createdBy>WiNDWAY</createdBy>
+<createdTime>2015-11-22 05:49:25 UTC</createdTime>
+<generatorID>C9349CE8-79F2-EC61-4735-B8677EF7A7DA</generatorID>
+<ownerDesignName>Part2</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8EAF3217-4037-338E-29D5-39ECDE1D46FB"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

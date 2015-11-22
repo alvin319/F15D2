@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<oracle.dbtools.crest.model.design.logical.LogicalDesign>
+   <object objectType="Entity" objectID="7126680A-FC58-CAE7-82E2-3B54FA539AD9" name="conference" seqName="seg_0"/>
+   <object objectType="Entity" objectID="1739A3CA-B846-376A-FDD0-5D2FCEA570F1" name="player" seqName="seg_0"/>
+   <object objectType="Entity" objectID="7A0F56E8-3DC2-5827-C62A-D94B0BED0AA6" name="team" seqName="seg_0"/>
+   <object objectType="Relation" objectID="417CFE95-9F19-3BD8-3A39-CB5A1BD575A9" name="conference_team" seqName="seg_0"/>
+   <object objectType="Relation" objectID="C9349CE8-79F2-EC61-4735-B8677EF7A7DA" name="team_player" seqName="seg_0"/>
+</oracle.dbtools.crest.model.design.logical.LogicalDesign>

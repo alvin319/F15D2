@@ -1,0 +1,50 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="29D3A87F-C583-D825-B7D9-D14E94B13FEC" name="conference">
+<createdBy>WiNDWAY</createdBy>
+<createdTime>2015-11-22 05:49:25 UTC</createdTime>
+<generatorID>7126680A-FC58-CAE7-82E2-3B54FA539AD9</generatorID>
+<ownerDesignName>Part2</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="C_ID" id="5CC4C731-EB5A-9C86-30CA-2CE7A9273637">
+<createdBy>WiNDWAY</createdBy>
+<createdTime>2015-11-22 05:49:25 UTC</createdTime>
+<generatorID>914C0D91-21E5-F357-DA0D-39213E45C0B7</generatorID>
+<ownerDesignName>Part2</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NAME" id="8753083E-F09F-F2FF-3EC0-1338EC72CCEF">
+<createdBy>WiNDWAY</createdBy>
+<createdTime>2015-11-22 05:49:25 UTC</createdTime>
+<generatorID>7F34D8BA-0596-975E-39D5-80577A74A1B7</generatorID>
+<ownerDesignName>Part2</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="38FC70EF-20FD-B4BB-73AE-6B4E9A984E19" name="conference_PK">
+<createdBy>WiNDWAY</createdBy>
+<createdTime>2015-11-22 05:49:25 UTC</createdTime>
+<generatorID>B60B8B88-B922-05B1-8D84-BB338C8BF59F</generatorID>
+<ownerDesignName>Part2</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="5CC4C731-EB5A-9C86-30CA-2CE7A9273637"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

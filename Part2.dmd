@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="Part2" id="A9FAEE8D-CF2A-5819-61E0-E698DDA51A4E" version="3.5">
+<createdBy>WiNDWAY</createdBy>
+<createdTime>2015-11-22 05:27:29 UTC</createdTime>
+<ownerDesignName>Part2</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>A9FAEE8D-CF2A-5819-61E0-E698DDA51A4E</designId>
+</OSDM_Design>

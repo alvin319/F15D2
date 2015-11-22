@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<oracle.dbtools.crest.model.design.relational.RelationalDesign>
+   <object objectType="Table" objectID="29D3A87F-C583-D825-B7D9-D14E94B13FEC" name="conference" seqName="seg_0"/>
+   <object objectType="Table" objectID="41E38321-D316-4505-AA3D-0C539F4D3C2D" name="player" seqName="seg_0"/>
+   <object objectType="Table" objectID="47BEF551-21F8-6054-4F08-DE948681C3B3" name="team" seqName="seg_0"/>
+   <object objectType="FKIndexAssociation" objectID="932AC809-F7B4-B780-E40A-207B05A73256" name="team_player_FK" seqName="seg_0" containerID="41E38321-D316-4505-AA3D-0C539F4D3C2D" refContainerID="47BEF551-21F8-6054-4F08-DE948681C3B3"/>
+   <object objectType="FKIndexAssociation" objectID="DC6EA31E-3399-B87C-DDEE-8FF96AD6DC65" name="conference_team_FK" seqName="seg_0" containerID="47BEF551-21F8-6054-4F08-DE948681C3B3" refContainerID="29D3A87F-C583-D825-B7D9-D14E94B13FEC"/>
+</oracle.dbtools.crest.model.design.relational.RelationalDesign>

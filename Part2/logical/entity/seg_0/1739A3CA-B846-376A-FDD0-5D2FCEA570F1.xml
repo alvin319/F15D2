@@ -1,0 +1,100 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="1739A3CA-B846-376A-FDD0-5D2FCEA570F1" name="player">
+<createdBy>WiNDWAY</createdBy>
+<createdTime>2015-11-22 05:35:33 UTC</createdTime>
+<ownerDesignName>Part2</ownerDesignName>
+<engineerTo>
+<item key="4B2ADC87-2038-1DB4-7CB9-CBCF1F1B589C" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="P_ID" id="7341011D-7FE0-0CA8-7E56-8D105B9F95CC">
+<createdBy>WiNDWAY</createdBy>
+<createdTime>2015-11-22 05:35:41 UTC</createdTime>
+<ownerDesignName>Part2</ownerDesignName>
+<engineerTo>
+<item key="4B2ADC87-2038-1DB4-7CB9-CBCF1F1B589C" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="NAME" id="374D9F28-1289-644E-C604-7CB38AB46A07">
+<createdBy>WiNDWAY</createdBy>
+<createdTime>2015-11-22 05:35:53 UTC</createdTime>
+<ownerDesignName>Part2</ownerDesignName>
+<engineerTo>
+<item key="4B2ADC87-2038-1DB4-7CB9-CBCF1F1B589C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="POSITION" id="E03B65D9-DD8F-572E-C1AC-369CBB38E749">
+<createdBy>WiNDWAY</createdBy>
+<createdTime>2015-11-22 05:36:00 UTC</createdTime>
+<ownerDesignName>Part2</ownerDesignName>
+<engineerTo>
+<item key="4B2ADC87-2038-1DB4-7CB9-CBCF1F1B589C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="HEIGHT" id="598A8C8A-1CBC-5931-CB28-A63E670BA7BD">
+<createdBy>WiNDWAY</createdBy>
+<createdTime>2015-11-22 05:36:07 UTC</createdTime>
+<ownerDesignName>Part2</ownerDesignName>
+<engineerTo>
+<item key="4B2ADC87-2038-1DB4-7CB9-CBCF1F1B589C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="T_ID" id="EEE3E882-6EAD-C656-D948-239EA22E8B50">
+<createdBy>WiNDWAY</createdBy>
+<createdTime>2015-11-22 05:36:43 UTC</createdTime>
+<generatorID>C9349CE8-79F2-EC61-4735-B8677EF7A7DA</generatorID>
+<ownerDesignName>Part2</ownerDesignName>
+<engineerTo>
+<item key="4B2ADC87-2038-1DB4-7CB9-CBCF1F1B589C" value="true"/>
+</engineerTo>
+<referedAttribute>E36356C3-86B6-D111-BEF2-B68C895627DA</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="D143E086-8145-3F30-808F-55B983693494" name="player PK">
+<createdBy>WiNDWAY</createdBy>
+<createdTime>2015-11-22 05:35:45 UTC</createdTime>
+<ownerDesignName>Part2</ownerDesignName>
+<engineerTo>
+<item key="4B2ADC87-2038-1DB4-7CB9-CBCF1F1B589C" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>7341011D-7FE0-0CA8-7E56-8D105B9F95CC</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>
