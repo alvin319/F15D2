@@ -27,7 +27,7 @@ prompt APPLICATION 25012 - Data Management Part II Fall 2015
 -- Application Export:
 --   Application:     25012
 --   Name:            Data Management Part II Fall 2015
---   Date and Time:   06:29 Sunday November 22, 2015
+--   Date and Time:   01:02 Monday November 23, 2015
 --   Exported By:     ALVIN.Q.DENG@UTEXAS.EDU
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -36,12 +36,12 @@ prompt APPLICATION 25012 - Data Management Part II Fall 2015
 --
 
 -- Application Statistics:
---   Pages:                      5
+--   Pages:                      6
 --     Items:                    8
---     Processes:                3
---     Regions:                  6
+--     Processes:                4
+--     Regions:                  9
 --     Buttons:                  5
---     Dynamic Actions:          4
+--     Dynamic Actions:          5
 --   Shared Components:
 --     Logic:
 --       Web Services:           1
@@ -107,7 +107,7 @@ wwv_flow_api.create_flow(
 ,p_csv_encoding=>'Y'
 ,p_auto_time_zone=>'N'
 ,p_last_updated_by=>'ALVIN.Q.DENG@UTEXAS.EDU'
-,p_last_upd_yyyymmddhh24miss=>'20151122061902'
+,p_last_upd_yyyymmddhh24miss=>'20151123005901'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_ui_type_name => null
 );
@@ -123,37 +123,54 @@ wwv_flow_api.create_list(
 wwv_flow_api.create_list_item(
  p_id=>wwv_flow_api.id(17587726916585345906)
 ,p_list_item_display_sequence=>10
-,p_list_item_link_text=>'Home'
-,p_list_item_link_target=>'f?p=&APP_ID.:1:&APP_SESSION.::&DEBUG.:'
+,p_list_item_link_text=>'NBA Apex Mobile App'
+,p_list_item_link_target=>'f?p=&APP_ID.:1:&SESSION.::&DEBUG.::::'
 ,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
-,p_list_item_current_for_pages=>'1,2,2,2,3,4,5,5'
+,p_list_item_current_for_pages=>'1,2,2,2,3,4,5,5,5'
+);
+wwv_flow_api.create_list_item(
+ p_id=>wwv_flow_api.id(18162254045678205950)
+,p_list_item_display_sequence=>20
+,p_list_item_link_text=>'Home'
+,p_list_item_link_target=>'f?p=&APP_ID.:1:&SESSION.::&DEBUG.::::'
+,p_parent_list_item_id=>wwv_flow_api.id(17587726916585345906)
+,p_list_item_current_type=>'TARGET_PAGE'
 );
 wwv_flow_api.create_list_item(
  p_id=>wwv_flow_api.id(18002486207777741640)
-,p_list_item_display_sequence=>20
+,p_list_item_display_sequence=>30
 ,p_list_item_link_text=>'NBA Query'
-,p_list_item_link_target=>'f?p=&APP_ID.:2:&SESSION.::&DEBUG.'
+,p_list_item_link_target=>'f?p=&APP_ID.:2:&SESSION.::&DEBUG.::::'
 ,p_parent_list_item_id=>wwv_flow_api.id(17587726916585345906)
 ,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
 ,p_list_item_current_for_pages=>'2'
 );
 wwv_flow_api.create_list_item(
  p_id=>wwv_flow_api.id(18007643891981311456)
-,p_list_item_display_sequence=>30
+,p_list_item_display_sequence=>40
 ,p_list_item_link_text=>'NBA Teams'
-,p_list_item_link_target=>'f?p=&APP_ID.:3:&SESSION.::&DEBUG.'
+,p_list_item_link_target=>'f?p=&APP_ID.:3:&SESSION.::&DEBUG.::::'
 ,p_parent_list_item_id=>wwv_flow_api.id(17587726916585345906)
 ,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
 ,p_list_item_current_for_pages=>'3'
 );
 wwv_flow_api.create_list_item(
  p_id=>wwv_flow_api.id(18010100102146974254)
-,p_list_item_display_sequence=>40
+,p_list_item_display_sequence=>50
 ,p_list_item_link_text=>'NBA Players'
-,p_list_item_link_target=>'f?p=&APP_ID.:4:&SESSION.::&DEBUG.'
+,p_list_item_link_target=>'f?p=&APP_ID.:4:&SESSION.::&DEBUG.::::'
 ,p_parent_list_item_id=>wwv_flow_api.id(17587726916585345906)
 ,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
 ,p_list_item_current_for_pages=>'4'
+);
+wwv_flow_api.create_list_item(
+ p_id=>wwv_flow_api.id(18168753255704349353)
+,p_list_item_display_sequence=>60
+,p_list_item_link_text=>'NBA Stats'
+,p_list_item_link_target=>'f?p=&APP_ID.:5:&SESSION.::&DEBUG.'
+,p_parent_list_item_id=>wwv_flow_api.id(17587726916585345906)
+,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
+,p_list_item_current_for_pages=>'5'
 );
 end;
 /
@@ -1320,6 +1337,7 @@ wwv_flow_api.create_theme(
 ,p_default_page_transition=>'SLIDE'
 ,p_default_popup_transition=>'POP'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_theme_file_prefix(51),'#IMAGE_PREFIX#themes/theme_51/')
+,p_icon_library=>'FONTAWESOME'
 ,p_css_file_urls=>'#THEME_IMAGES#css/5_0.css'
 );
 end;
@@ -2082,7 +2100,22 @@ wwv_flow_api.create_page(
 ,p_cache_mode=>'NOCACHE'
 ,p_help_text=>'No help is available for this page.'
 ,p_last_updated_by=>'ALVIN.Q.DENG@UTEXAS.EDU'
-,p_last_upd_yyyymmddhh24miss=>'20151122061902'
+,p_last_upd_yyyymmddhh24miss=>'20151122225002'
+);
+wwv_flow_api.create_page_plug(
+ p_id=>wwv_flow_api.id(18160614216095114705)
+,p_plug_name=>'P1_NAVIGATION'
+,p_region_template_options=>'#DEFAULT#'
+,p_component_template_options=>'#DEFAULT#'
+,p_plug_template=>wwv_flow_api.id(17587719439365345876)
+,p_plug_display_sequence=>10
+,p_include_in_reg_disp_sel_yn=>'Y'
+,p_plug_new_grid=>true
+,p_plug_display_point=>'BODY'
+,p_list_id=>wwv_flow_api.id(17587717293290345865)
+,p_plug_source_type=>'NATIVE_LIST'
+,p_list_template_id=>wwv_flow_api.id(17587720065532345879)
+,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
 );
 end;
 /
@@ -2103,7 +2136,7 @@ wwv_flow_api.create_page(
 ,p_cache_mode=>'NOCACHE'
 ,p_help_text=>'No help is available for this page.'
 ,p_last_updated_by=>'ALVIN.Q.DENG@UTEXAS.EDU'
-,p_last_upd_yyyymmddhh24miss=>'20151122044402'
+,p_last_upd_yyyymmddhh24miss=>'20151122231502'
 );
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(18002486829628741641)
@@ -2123,7 +2156,7 @@ wwv_flow_api.create_page_plug(
 ,p_plug_name=>'Result'
 ,p_region_template_options=>'#DEFAULT#'
 ,p_plug_template=>wwv_flow_api.id(17587719681673345876)
-,p_plug_display_sequence=>40
+,p_plug_display_sequence=>30
 ,p_include_in_reg_disp_sel_yn=>'N'
 ,p_plug_new_grid_row=>false
 ,p_plug_new_grid_column=>false
@@ -2137,7 +2170,7 @@ wwv_flow_api.create_page_plug(
 ,p_attribute_01=>'STRIPE:STROKE'
 );
 wwv_flow_api.create_region_column(
- p_id=>wwv_flow_api.id(18068702687022023047)
+ p_id=>wwv_flow_api.id(18160615049393114713)
 ,p_name=>'NAME'
 ,p_data_type=>'NAME'
 ,p_is_visible=>true
@@ -2158,7 +2191,6 @@ wwv_flow_api.create_page_button(
 ,p_button_template_id=>wwv_flow_api.id(17587724864738345885)
 ,p_button_image_alt=>'Submit'
 ,p_button_position=>'REGION_TEMPLATE_CHANGE'
-,p_grid_new_grid=>false
 );
 wwv_flow_api.create_page_button(
  p_id=>wwv_flow_api.id(18053678948543000202)
@@ -2194,108 +2226,60 @@ wwv_flow_api.create_page_item(
 ,p_name=>'P2_DB'
 ,p_item_sequence=>1
 ,p_item_plug_id=>wwv_flow_api.id(18002486829628741641)
-,p_prompt=>'Db'
 ,p_source=>'jdbc:oracle:thin:@sayonara.microlab.cs.utexas.edu:1521:orcl'
 ,p_source_type=>'STATIC'
-,p_display_as=>'NATIVE_TEXT_FIELD'
-,p_cSize=>30
-,p_cMaxlength=>255
-,p_field_template=>wwv_flow_api.id(17587720434092345880)
-,p_item_template_options=>'#DEFAULT#'
-,p_attribute_01=>'N'
-,p_attribute_02=>'N'
-,p_attribute_04=>'TEXT'
-,p_attribute_05=>'NONE'
+,p_display_as=>'NATIVE_HIDDEN'
+,p_attribute_01=>'Y'
 );
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(18002499241277741655)
 ,p_name=>'P2_USER'
 ,p_item_sequence=>2
 ,p_item_plug_id=>wwv_flow_api.id(18002486829628741641)
-,p_prompt=>'User'
 ,p_source=>'C##cs347_qd472'
 ,p_source_type=>'STATIC'
-,p_display_as=>'NATIVE_TEXT_FIELD'
-,p_cSize=>30
-,p_cMaxlength=>255
-,p_field_template=>wwv_flow_api.id(17587720434092345880)
-,p_item_template_options=>'#DEFAULT#'
-,p_attribute_01=>'N'
-,p_attribute_02=>'N'
-,p_attribute_04=>'TEXT'
-,p_attribute_05=>'NONE'
+,p_display_as=>'NATIVE_HIDDEN'
+,p_attribute_01=>'Y'
 );
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(18002500021549741656)
 ,p_name=>'P2_PASS'
 ,p_item_sequence=>3
 ,p_item_plug_id=>wwv_flow_api.id(18002486829628741641)
-,p_prompt=>'Pass'
 ,p_source=>'orcl_qd472'
 ,p_source_type=>'STATIC'
-,p_display_as=>'NATIVE_TEXT_FIELD'
-,p_cSize=>30
-,p_cMaxlength=>255
-,p_field_template=>wwv_flow_api.id(17587720434092345880)
-,p_item_template_options=>'#DEFAULT#'
-,p_attribute_01=>'N'
-,p_attribute_02=>'N'
-,p_attribute_04=>'TEXT'
-,p_attribute_05=>'NONE'
+,p_display_as=>'NATIVE_HIDDEN'
+,p_attribute_01=>'Y'
 );
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(18002500889263741656)
 ,p_name=>'P2_MODE'
 ,p_item_sequence=>4
 ,p_item_plug_id=>wwv_flow_api.id(18002486829628741641)
-,p_prompt=>'Mode'
 ,p_source=>'rdf_mode'
 ,p_source_type=>'STATIC'
-,p_display_as=>'NATIVE_TEXT_FIELD'
-,p_cSize=>30
-,p_cMaxlength=>255
-,p_field_template=>wwv_flow_api.id(17587720434092345880)
-,p_item_template_options=>'#DEFAULT#'
-,p_attribute_01=>'N'
-,p_attribute_02=>'N'
-,p_attribute_04=>'TEXT'
-,p_attribute_05=>'NONE'
+,p_display_as=>'NATIVE_HIDDEN'
+,p_attribute_01=>'Y'
 );
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(18002501677758741658)
 ,p_name=>'P2_MODEL'
 ,p_item_sequence=>5
 ,p_item_plug_id=>wwv_flow_api.id(18002486829628741641)
-,p_prompt=>'Model'
 ,p_source=>'D2'
 ,p_source_type=>'STATIC'
-,p_display_as=>'NATIVE_TEXT_FIELD'
-,p_cSize=>30
-,p_cMaxlength=>255
-,p_field_template=>wwv_flow_api.id(17587720434092345880)
-,p_item_template_options=>'#DEFAULT#'
-,p_attribute_01=>'N'
-,p_attribute_02=>'N'
-,p_attribute_04=>'TEXT'
-,p_attribute_05=>'NONE'
+,p_display_as=>'NATIVE_HIDDEN'
+,p_attribute_01=>'Y'
 );
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(18002502481144741659)
 ,p_name=>'P2_RETURNDIMENSIONS'
 ,p_item_sequence=>6
 ,p_item_plug_id=>wwv_flow_api.id(18002486829628741641)
-,p_prompt=>'Returndimensions'
 ,p_source=>'False'
 ,p_source_type=>'STATIC'
-,p_display_as=>'NATIVE_TEXT_FIELD'
-,p_cSize=>30
-,p_cMaxlength=>255
-,p_field_template=>wwv_flow_api.id(17587720434092345880)
-,p_item_template_options=>'#DEFAULT#'
-,p_attribute_01=>'N'
-,p_attribute_02=>'N'
-,p_attribute_04=>'TEXT'
-,p_attribute_05=>'NONE'
+,p_display_as=>'NATIVE_HIDDEN'
+,p_attribute_01=>'Y'
 );
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(18002503264260741660)
@@ -2423,6 +2407,31 @@ wwv_flow_api.create_page_da_action(
 ,p_execute_on_page_init=>'N'
 ,p_action=>'NATIVE_SUBMIT_PAGE'
 ,p_attribute_02=>'Y'
+);
+wwv_flow_api.create_page_da_event(
+ p_id=>wwv_flow_api.id(18160614729077114710)
+,p_name=>'New'
+,p_event_sequence=>30
+,p_triggering_element_type=>'ITEM'
+,p_triggering_element=>'P2_SELECT_TEAM'
+,p_bind_type=>'bind'
+,p_bind_event_type=>'change'
+);
+wwv_flow_api.create_page_da_action(
+ p_id=>wwv_flow_api.id(18160614844665114711)
+,p_event_id=>wwv_flow_api.id(18160614729077114710)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_SET_VALUE'
+,p_affected_elements_type=>'ITEM'
+,p_affected_elements=>'P2_QUERY'
+,p_attribute_01=>'FUNCTION_BODY'
+,p_attribute_06=>'RETURN ''"MATCH (a:player)-[:team]->(b:team) WHERE b.t_id = '' || :P2_SELECT_TEAM || '' RETURN a.name"'';'
+,p_attribute_08=>'N'
+,p_attribute_09=>'N'
+,p_stop_execution_on_error=>'Y'
+,p_wait_for_result=>'Y'
 );
 wwv_flow_api.create_page_process(
  p_id=>wwv_flow_api.id(18002498018003741649)
@@ -2612,6 +2621,170 @@ wwv_flow_api.create_page_process(
 );
 end;
 /
+prompt --application/pages/page_00005
+begin
+wwv_flow_api.create_page(
+ p_id=>5
+,p_user_interface_id=>wwv_flow_api.id(17587725813735345894)
+,p_name=>'NBA Stats'
+,p_page_mode=>'NORMAL'
+,p_step_title=>'NBA Stats'
+,p_step_sub_title=>'NBA Stats'
+,p_step_sub_title_type=>'TEXT_WITH_SUBSTITUTIONS'
+,p_first_item=>'NO_FIRST_ITEM'
+,p_page_template_options=>'#DEFAULT#'
+,p_dialog_chained=>'Y'
+,p_overwrite_navigation_list=>'N'
+,p_page_is_public_y_n=>'N'
+,p_cache_mode=>'NOCACHE'
+,p_help_text=>'No help is available for this page.'
+,p_last_updated_by=>'ALVIN.Q.DENG@UTEXAS.EDU'
+,p_last_upd_yyyymmddhh24miss=>'20151123005901'
+);
+wwv_flow_api.create_page_plug(
+ p_id=>wwv_flow_api.id(18160615172327114714)
+,p_plug_name=>'NBA Position Stats'
+,p_region_template_options=>'#DEFAULT#'
+,p_component_template_options=>'#DEFAULT#'
+,p_plug_template=>wwv_flow_api.id(17587719439365345876)
+,p_plug_display_sequence=>20
+,p_include_in_reg_disp_sel_yn=>'Y'
+,p_plug_new_grid_row=>false
+,p_plug_new_grid_column=>false
+,p_plug_display_point=>'BODY'
+,p_plug_source_type=>'NATIVE_FLASH_CHART5'
+,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
+);
+wwv_flow_api.create_flash_chart5(
+ p_id=>wwv_flow_api.id(18160615267568114715)
+,p_default_chart_type=>'2DColumn'
+,p_chart_title=>'NBA Position Stats'
+,p_chart_rendering=>'SVG_ONLY'
+,p_display_attr=>':H:N:V:X::N::::Default:N:N:N:N:N:Default:N::S:'
+,p_dial_tick_attr=>':::::::::::'
+,p_gantt_attr=>':::::::::::::::::::'
+,p_pie_attr=>':::'
+,p_map_attr=>':::N:N:Series:::::'
+,p_margins=>':::'
+, p_omit_label_interval=> null
+,p_bgtype=>'Trans'
+,p_grid_gradient_rotation=>0
+,p_color_scheme=>'6'
+,p_x_axis_title=>'Position'
+,p_x_axis_label_font=>'Helvetica:14:#000000'
+,p_y_axis_title=>'Players'
+,p_y_axis_label_font=>'Helvetica:10:#000000'
+,p_async_update=>'N'
+, p_names_font=> null
+, p_names_rotation=> null
+,p_values_font=>'Helvetica:10:#000000'
+,p_hints_font=>'Helvetica:10:#000000'
+,p_legend_font=>'::'
+,p_chart_title_font=>'Helvetica:12:#000000'
+,p_x_axis_title_font=>'Helvetica:14:#000000'
+,p_y_axis_title_font=>'Helvetica:10:#000000'
+,p_gauge_labels_font=>'::'
+,p_use_chart_xml=>'N'
+);
+wwv_flow_api.create_flash_chart5_series(
+ p_id=>wwv_flow_api.id(18160615358272114716)
+,p_chart_id=>wwv_flow_api.id(18160615267568114715)
+,p_series_seq=>10
+,p_series_name=>'NBA Position Series'
+,p_series_query=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'SELECT null link, player_position label, COUNT(jt3.position_count) value',
+'FROM ',
+'(SELECT jt2.player_position AS player_position, ',
+' ROW_NUMBER() OVER(PARTITION BY jt2.player_position ORDER BY jt.player_id DESC) rn FROM apex_collections t,',
+'JSON_TABLE(t.clob001, ''$.player_id[*]'' COLUMNS rid for ordinality, player_id number PATH ''$'') jt,',
+'JSON_TABLE(t.clob001, ''$.player_position[*]'' COLUMNS rid for ordinality, player_position varchar2(255) PATH ''$'') jt2',
+'WHERE t.collection_name = ''P5_DOREST_RESULTS'' AND jt.rid = jt2.rid) position_data,',
+'apex_collections t1,',
+'JSON_TABLE(t1.clob001, ''$.player_position[*]'' COLUMNS rid for ordinality, position_count varchar2(255) PATH ''$'') jt3',
+'WHERE rn = 1 AND t1.collection_name = ''P5_DOREST_RESULTS'' AND player_position = jt3.position_count',
+'GROUP BY player_position'))
+,p_series_type=>'Bar'
+,p_series_query_type=>'SQL_QUERY'
+,p_series_query_parse_opt=>'PARSE_CHART_QUERY'
+,p_series_query_row_count_max=>20
+,p_show_action_link=>'N'
+);
+wwv_flow_api.create_page_plug(
+ p_id=>wwv_flow_api.id(18168753889265349355)
+,p_plug_name=>'NBA Height Stats'
+,p_region_template_options=>'#DEFAULT#'
+,p_plug_template=>wwv_flow_api.id(17587719439365345876)
+,p_plug_display_sequence=>10
+,p_include_in_reg_disp_sel_yn=>'N'
+,p_plug_new_grid=>true
+,p_plug_display_point=>'BODY'
+,p_plug_source_type=>'NATIVE_FLASH_CHART5'
+,p_plug_query_row_template=>1
+,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
+);
+wwv_flow_api.create_flash_chart5(
+ p_id=>wwv_flow_api.id(18168754263928349357)
+,p_default_chart_type=>'2DColumn'
+,p_chart_title=>'NBA Player Heights'
+,p_chart_rendering=>'SVG_ONLY'
+,p_chart_name=>'chart_18168754263928349357'
+,p_display_attr=>':H:N:V:X::N::::None:N:N:N:N:N:Default:N::S:'
+,p_dial_tick_attr=>':::::::::::'
+,p_gantt_attr=>':::::::::::::::::::'
+,p_pie_attr=>':::'
+,p_map_attr=>'Orthographic:RegionBounds:REGION_NAME:N:N:Series:::::'
+,p_margins=>':::'
+, p_omit_label_interval=> null
+,p_bgtype=>'Trans'
+,p_grid_gradient_rotation=>0
+,p_color_scheme=>'6'
+,p_x_axis_title=>'Player Name'
+,p_x_axis_label_font=>'Helvetica:10:#000000'
+,p_y_axis_title=>'Player Height'
+,p_y_axis_label_font=>'Helvetica:10:#000000'
+,p_async_update=>'N'
+, p_names_font=> null
+, p_names_rotation=> null
+,p_values_font=>'Helvetica:10:#000000'
+,p_hints_font=>'Helvetica:10:#000000'
+,p_legend_font=>'::'
+,p_grid_labels_font=>'Tahoma:10:#000000'
+,p_chart_title_font=>'Helvetica:12:#000000'
+,p_x_axis_title_font=>'Helvetica:14:#000000'
+,p_y_axis_title_font=>'Helvetica:14:#000000'
+,p_gauge_labels_font=>'::'
+,p_use_chart_xml=>'N'
+);
+wwv_flow_api.create_flash_chart5_series(
+ p_id=>wwv_flow_api.id(18168754657649349359)
+,p_chart_id=>wwv_flow_api.id(18168754263928349357)
+,p_series_seq=>10
+,p_series_name=>'NBA Height Series'
+,p_series_query=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
+'SELECT null link, jt.player_name label, jt2.player_height value ',
+'FROM apex_collections t,',
+'JSON_TABLE(t.clob001, ''$.player_name[*]'' COLUMNS rid for ordinality, player_name varchar2(255) PATH ''$'') jt,',
+'JSON_TABLE(t.clob001, ''$.player_height[*]'' COLUMNS rid for ordinality, player_height number PATH ''$'') jt2',
+'WHERE t.collection_name = ''P5_DOREST_RESULTS'' AND jt.rid = jt2.rid'))
+,p_series_type=>'Bar'
+,p_series_query_type=>'SQL_QUERY'
+,p_series_query_no_data_found=>'no data found'
+,p_series_query_row_count_max=>200
+,p_show_action_link=>'N'
+);
+wwv_flow_api.create_page_process(
+ p_id=>wwv_flow_api.id(18172854363811748750)
+,p_process_sequence=>10
+,p_process_point=>'BEFORE_HEADER'
+,p_process_type=>'NATIVE_WEB_SERVICE'
+,p_process_name=>'NBA Stat Polling'
+,p_process_sql_clob=>'17587752876055351160:17587753093235351163'
+,p_attribute_01=>wwv_flow_api.id(17587753093235351163)
+,p_attribute_02=>'COLLECTION'
+,p_attribute_03=>'P5_DOREST_RESULTS'
+);
+end;
+/
 prompt --application/shared_components/logic/webservices/nbarest
 begin
 wwv_flow_api.create_web_service(
@@ -2657,6 +2830,13 @@ wwv_flow_api.create_ws_process_parms_map(
 ,p_map_type=>'STATIC'
 ,p_parm_value=>'"SELECT p.name AS player_name, t.name AS team_name, p.position AS player_position, p.height AS player_height FROM player p JOIN team t WHERE p.t_id = t.t_id"'
 );
+wwv_flow_api.create_ws_process_parms_map(
+ p_id=>wwv_flow_api.id(18172857433605748755)
+,p_parameter_id=>wwv_flow_api.id(17587753363618351170)
+,p_process_id=>wwv_flow_api.id(18172854363811748750)
+,p_map_type=>'STATIC'
+,p_parm_value=>'"SELECT p.name AS player_name, t.name AS team_name, p.position AS player_position, p.height AS player_height, p.p_id AS player_id FROM player p JOIN team t WHERE p.t_id = t.t_id"'
+);
 wwv_flow_api.create_ws_parameters(
  p_id=>wwv_flow_api.id(17587753526959351171)
 ,p_ws_opers_id=>wwv_flow_api.id(17587753093235351163)
@@ -2693,6 +2873,13 @@ wwv_flow_api.create_ws_process_parms_map(
 ,p_map_type=>'STATIC'
 ,p_parm_value=>'jdbc:oracle:thin:@sayonara.microlab.cs.utexas.edu:1521:orcl'
 );
+wwv_flow_api.create_ws_process_parms_map(
+ p_id=>wwv_flow_api.id(18172854637408748753)
+,p_parameter_id=>wwv_flow_api.id(17587784583348357043)
+,p_process_id=>wwv_flow_api.id(18172854363811748750)
+,p_map_type=>'STATIC'
+,p_parm_value=>'jdbc:oracle:thin:@sayonara.microlab.cs.utexas.edu:1521:orcl'
+);
 wwv_flow_api.create_ws_parameters(
  p_id=>wwv_flow_api.id(17587784892824357043)
 ,p_ws_opers_id=>wwv_flow_api.id(17587753093235351163)
@@ -2718,6 +2905,13 @@ wwv_flow_api.create_ws_process_parms_map(
  p_id=>wwv_flow_api.id(18010225225687992478)
 ,p_parameter_id=>wwv_flow_api.id(17587784892824357043)
 ,p_process_id=>wwv_flow_api.id(18010224522398992473)
+,p_map_type=>'STATIC'
+,p_parm_value=>'C##cs347_qd472'
+);
+wwv_flow_api.create_ws_process_parms_map(
+ p_id=>wwv_flow_api.id(18172855013535748753)
+,p_parameter_id=>wwv_flow_api.id(17587784892824357043)
+,p_process_id=>wwv_flow_api.id(18172854363811748750)
 ,p_map_type=>'STATIC'
 ,p_parm_value=>'C##cs347_qd472'
 );
@@ -2749,6 +2943,13 @@ wwv_flow_api.create_ws_process_parms_map(
 ,p_map_type=>'STATIC'
 ,p_parm_value=>'orcl_qd472'
 );
+wwv_flow_api.create_ws_process_parms_map(
+ p_id=>wwv_flow_api.id(18172855492955748754)
+,p_parameter_id=>wwv_flow_api.id(17587785196437357043)
+,p_process_id=>wwv_flow_api.id(18172854363811748750)
+,p_map_type=>'STATIC'
+,p_parm_value=>'orcl_qd472'
+);
 wwv_flow_api.create_ws_parameters(
  p_id=>wwv_flow_api.id(17587785491723357044)
 ,p_ws_opers_id=>wwv_flow_api.id(17587753093235351163)
@@ -2774,6 +2975,13 @@ wwv_flow_api.create_ws_process_parms_map(
  p_id=>wwv_flow_api.id(18010226043439992479)
 ,p_parameter_id=>wwv_flow_api.id(17587785491723357044)
 ,p_process_id=>wwv_flow_api.id(18010224522398992473)
+,p_map_type=>'STATIC'
+,p_parm_value=>'rdf_mode'
+);
+wwv_flow_api.create_ws_process_parms_map(
+ p_id=>wwv_flow_api.id(18172855849716748754)
+,p_parameter_id=>wwv_flow_api.id(17587785491723357044)
+,p_process_id=>wwv_flow_api.id(18172854363811748750)
 ,p_map_type=>'STATIC'
 ,p_parm_value=>'rdf_mode'
 );
@@ -2805,6 +3013,13 @@ wwv_flow_api.create_ws_process_parms_map(
 ,p_map_type=>'STATIC'
 ,p_parm_value=>'D2'
 );
+wwv_flow_api.create_ws_process_parms_map(
+ p_id=>wwv_flow_api.id(18172856205399748754)
+,p_parameter_id=>wwv_flow_api.id(17587785724196357044)
+,p_process_id=>wwv_flow_api.id(18172854363811748750)
+,p_map_type=>'STATIC'
+,p_parm_value=>'D2'
+);
 wwv_flow_api.create_ws_parameters(
  p_id=>wwv_flow_api.id(17587786081012357044)
 ,p_ws_opers_id=>wwv_flow_api.id(17587753093235351163)
@@ -2833,6 +3048,13 @@ wwv_flow_api.create_ws_process_parms_map(
 ,p_map_type=>'STATIC'
 ,p_parm_value=>'False'
 );
+wwv_flow_api.create_ws_process_parms_map(
+ p_id=>wwv_flow_api.id(18172856641838748755)
+,p_parameter_id=>wwv_flow_api.id(17587786081012357044)
+,p_process_id=>wwv_flow_api.id(18172854363811748750)
+,p_map_type=>'STATIC'
+,p_parm_value=>'False'
+);
 wwv_flow_api.create_ws_parameters(
  p_id=>wwv_flow_api.id(17587786345312357044)
 ,p_ws_opers_id=>wwv_flow_api.id(17587753093235351163)
@@ -2858,6 +3080,13 @@ wwv_flow_api.create_ws_process_parms_map(
  p_id=>wwv_flow_api.id(18010227200926992480)
 ,p_parameter_id=>wwv_flow_api.id(17587786345312357044)
 ,p_process_id=>wwv_flow_api.id(18010224522398992473)
+,p_map_type=>'STATIC'
+,p_parm_value=>'SQL_JSON'
+);
+wwv_flow_api.create_ws_process_parms_map(
+ p_id=>wwv_flow_api.id(18172857037284748755)
+,p_parameter_id=>wwv_flow_api.id(17587786345312357044)
+,p_process_id=>wwv_flow_api.id(18172854363811748750)
 ,p_map_type=>'STATIC'
 ,p_parm_value=>'SQL_JSON'
 );
