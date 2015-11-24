@@ -1,0 +1,5 @@
+from SIM_person retrieve *;
+from SIM_emp retrieve *;
+from SIM_manager retrieve name, name OF department;
+from SIM_project retrieve name, name OF employees, name OF department;
+from SIM_dept retrieve name, name OF employees, name OF projects, name OF manager;
