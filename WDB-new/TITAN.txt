@@ -1,0 +1,107 @@
+CLASS SIM_person (
+person_id:INTEGER, REQUIRED ;
+name:STRING ;
+ssnum:STRING ;
+gender:STRING ;
+birth_date:STRING ;
+address:STRING ;
+city:STRING ;
+state:STRING ;
+zip:STRING ;
+ );
+
+SUBCLASS SIM_emp OF SIM_person (
+emp_id:INTEGER, REQUIRED ;
+hire_date:STRING ;
+salary:INTEGER ;
+status:STRING ;
+ );
+
+SUBCLASS SIM_project_emp OF SIM_emp (
+title:STRING ;
+rating:STRING ;
+department :SIM_dept, INVERSE IS employees ;
+projects :SIM_project, MV, INVERSE IS employees ;
+ );
+
+SUBCLASS SIM_manager OF SIM_emp (
+title:STRING ;
+bonus:INTEGER ;
+department :SIM_dept, INVERSE IS manager ;
+);
+
+CLASS SIM_project (
+project_id:INTEGER, REQUIRED ;
+name:STRING ;
+department :SIM_dept, INVERSE IS projects ;
+employees :SIM_project_emp, MV, INVERSE IS projects ;
+ );
+
+CLASS SIM_dept (
+dept_id:INTEGER, REQUIRED ;
+name:STRING ;
+location:STRING ;
+manager :SIM_manager, INVERSE IS department ;
+projects :SIM_project, MV(DISTINCT), INVERSE IS department ;
+employees :SIM_project_emp, MV(DISTINCT), INVERSE IS department ;
+ );
+
+INSERT SIM_project_emp ( person_id := 1 , name := "person1" , ssnum := "ssnum1" , gender := "gender1" ,
+birth_date := "birth_date1" , address := "address1" , city := "city1" , state := "state1" , zip := "zip1" ,
+emp_id := 1 , hire_date := "hire_date1" , salary := 1001 , status := "status1" , title := "title1" , rating := "rating1" );
+INSERT SIM_project_emp ( person_id := 2 , name := "person2" , ssnum := "ssnum2" , gender := "gender2" ,
+birth_date := "birth_date2" , address := "address2" , city := "city2" , state := "state2" , zip := "zip2" ,
+emp_id := 2 , hire_date := "hire_date2" , salary := 1002 , status := "status2" , title := "title2" , rating := "rating2" );
+INSERT SIM_project_emp ( person_id := 3 , name := "person3" , ssnum := "ssnum3" , gender := "gender3" ,
+birth_date := "birth_date3" , address := "address3" , city := "city3" , state := "state3" , zip := "zip3" ,
+emp_id := 3 , hire_date := "hire_date3" , salary := 1003 , status := "status3" , title := "title3" , rating := "rating3" );
+INSERT SIM_project_emp ( person_id := 4 , name := "person4" , ssnum := "ssnum4" , gender := "gender4" ,
+birth_date := "birth_date4" , address := "address4" , city := "city4" , state := "state4" , zip := "zip4" ,
+emp_id := 4 , hire_date := "hire_date4" , salary := 1004 , status := "status4" , title := "title4" , rating := "rating4" );
+INSERT SIM_project_emp ( person_id := 5 , name := "person5" , ssnum := "ssnum5" , gender := "gender5" ,
+birth_date := "birth_date5" , address := "address5" , city := "city5" , state := "state5" , zip := "zip5" ,
+emp_id := 5 , hire_date := "hire_date5" , salary := 1005 , status := "status5" , title := "title5" , rating := "rating5" );
+INSERT SIM_project_emp ( person_id := 6 , name := "person6" , ssnum := "ssnum6" , gender := "gender6" ,
+birth_date := "birth_date6" , address := "address6" , city := "city6" , state := "state6" , zip := "zip6" ,
+emp_id := 6 , hire_date := "hire_date6" , salary := 1006 , status := "status6" , title := "title6" , rating := "rating6" );
+
+INSERT SIM_manager ( person_id := 7 , name := "manager1" , ssnum := "ssnum7" , gender := "gender7" ,
+birth_date := "birth_date7" , address := "address7" , city := "city7" , state := "state7" , zip := "zip7" ,
+emp_id := 7 , hire_date := "hire_date7" , salary := 1007 , status := "status7" , title := "title7" , bonus := "bonus7" );
+INSERT SIM_manager ( person_id := 8 , name := "manager2" , ssnum := "ssnum8" , gender := "gender8" ,
+birth_date := "birth_date8" , address := "address8" , city := "city8" , state := "state8" , zip := "zip8" ,
+emp_id := 8 , hire_date := "hire_date8" , salary := 1008 , status := "status8" , title := "title8" , bonus := "bonus8" );
+
+insert SIM_dept( dept_id := 1 , name := "department1" , location := "location1" );
+insert SIM_dept( dept_id := 2 , name := "department2" , location := "location2" );
+
+insert SIM_project( project_id := 1 , name := "project1" );
+insert SIM_project( project_id := 2 , name := "project2" );
+insert SIM_project( project_id := 3 , name := "project3" );
+
+MODIFY LIMIT = ALL SIM_dept (manager := SIM_manager WITH (person_id = 7)) WHERE dept_id = 1;
+MODIFY LIMIT = ALL SIM_dept (manager := SIM_manager WITH (person_id = 8)) WHERE dept_id = 2;
+
+MODIFY LIMIT = ALL SIM_project (department := SIM_dept WITH (dept_id = 1)) WHERE project_id = 1;
+MODIFY LIMIT = ALL SIM_project (department := SIM_dept WITH (dept_id = 1)) WHERE project_id = 2;
+MODIFY LIMIT = ALL SIM_project (department := SIM_dept WITH (dept_id = 2)) WHERE project_id = 3;
+
+MODIFY LIMIT = ALL SIM_project_emp (projects := SIM_project WITH (project_id = 1)) WHERE person_id = 1 OR person_id = 2;
+MODIFY LIMIT = ALL SIM_project_emp (projects := SIM_project WITH (project_id = 2)) WHERE person_id = 3 OR person_id = 4;
+MODIFY LIMIT = ALL SIM_project_emp (projects := SIM_project WITH (project_id = 3)) WHERE person_id = 5 OR person_id = 6;
+
+MODIFY LIMIT = ALL SIM_project_emp (projects := INCLUDE SIM_project WITH (project_id = 2)) WHERE person_id = 1;
+MODIFY LIMIT = ALL SIM_project_emp (projects := INCLUDE SIM_project WITH (project_id = 3)) WHERE person_id = 2;
+
+MODIFY LIMIT = ALL SIM_project_emp (department := SIM_dept WITH (dept_id = 1)) WHERE person_id = 1;
+MODIFY LIMIT = ALL SIM_project_emp (department := SIM_dept WITH (dept_id = 1)) WHERE person_id = 2;
+MODIFY LIMIT = ALL SIM_project_emp (department := SIM_dept WITH (dept_id = 1)) WHERE person_id = 3;
+MODIFY LIMIT = ALL SIM_project_emp (department := SIM_dept WITH (dept_id = 1)) WHERE person_id = 4;
+MODIFY LIMIT = ALL SIM_project_emp (department := SIM_dept WITH (dept_id = 2)) WHERE person_id = 5;
+MODIFY LIMIT = ALL SIM_project_emp (department := SIM_dept WITH (dept_id = 2)) WHERE person_id = 6;
+
+from SIM_person retrieve *;
+from SIM_emp retrieve *;
+from SIM_manager retrieve name, name OF department;
+from SIM_project retrieve name, name OF employees, name OF department;
+from SIM_dept retrieve name, name OF employees, name OF projects, name OF manager;

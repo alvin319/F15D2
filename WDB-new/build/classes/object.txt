@@ -1,0 +1,3 @@
+graph = TitanFactory.open('../conf/cannata.properties')
+g = graph.traversal(standard())
+graph.close()

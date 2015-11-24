@@ -1,0 +1,6 @@
+graph = TitanFactory.open('../conf/cannata.properties')
+g = graph.traversal(standard())
+def getEdgeInfo(id, rname, attr) { TitanFactory.open('../conf/cannata.properties').traversal(standard()).E().has(T.label, rname).filter{ it.get().getVertex(0).id() == id}.next().getVertex(1).values(attr).next() }
+g.V().has(T.label, 'emp').map{ it.get().value('mgr') + " | " + it.get().value('job') + " | " + it.get().value('ename') + " | " + it.get().value('hiredate') }
+g.V().has(T.label, 'emp').has('job', 'CLERK').has('sal', '800').map{ it.get().value('empno') }
+graph.close()

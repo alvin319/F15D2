@@ -1,0 +1,5 @@
+graph = TitanFactory.open('../conf/cannata.properties')
+g = graph.traversal(standard())
+tx = graph.newTransaction()
+tx.commit()
+graph.close()
