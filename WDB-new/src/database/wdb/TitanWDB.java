@@ -12,89 +12,89 @@ import java.io.*;
 import java.util.*;
 
 /**
- * Created by Raymond on 11/16/2015.
+ * WDB + TitanDB
+ *
+ * Created by Raymond Chee and Alvin Deng on 11/16/2015.
+ *
+ * Updated by Alvin Deng on 04/30/2016.
  */
+
 public class TitanWDB {
-    public static BufferedReader in = null;
-    public static QueryParser parser = null;
-    public static TitanGraph graph = null;
-    public static TitanTransaction tx = null;
-    public static Object rootID = null;
+    private static BufferedReader in = null;
+    private static QueryParser parser = null;
+    private static TitanGraph graph = null;
+    private static Object rootID = null;
 
     public static void main(String[] args) {
         try {
-            TitanFactory.Builder config = TitanFactory.build();
-            config.set("storage.backend", "berkeleyje");
-            config.set("storage.directory", "db/cannata");
-            graph = config.open();
-            TitanManagement mg = graph.openManagement();
-            boolean initGraph = mg.getGraphIndex("byClassDef") == null;
-            if (initGraph) {
-                VertexLabel classLabel = mg.makeVertexLabel("classDef").make();
-                PropertyKey name = mg.makePropertyKey("name").dataType(String.class).make();
-                mg.buildIndex("byClassDef", Vertex.class).addKey(name).indexOnly(classLabel).buildCompositeIndex();
-            }
-            mg.commit();
-            tx = graph.newTransaction();
-            if (initGraph) {
-                Vertex root = tx.addVertex(T.label, "classDef", "name", "root node");
-                // regular class defs can't have spaces
-                tx.commit();
-                rootID = root.id();
-            } else {
-                GraphTraversalSource g = graph.traversal();
-                g.V().hasLabel("classDef").forEachRemaining(n -> {
-                    if (n.property("name").value().equals("root node")) {
-                        rootID = n.id();
-                    }
-                });
-            }
+            initTitanDB();
+            processInput();
 
+        } catch (RuntimeException e) {
+            throw e;
+        }
+    }
 
-            System.out.println("WDB SIM on Titan Final Project");
-            System.out.println("Implemented by: Alvin Deng and Raymond Chee");
-
-            in = new BufferedReader(new InputStreamReader(System.in));
-            parser = new QueryParser(in);
-
-            Query q;
-
-            while (true) {
-                try {
-                    if (!in.ready()) {
-                        System.out.print("\nWDB>");
-                    }
-
-                    q = parser.getNextQuery();
-                    if (q == null) {
-                        break;
-                    } else {
-                        processQuery(q);
-                    }
-                } catch (ParseException pe) {
-                    System.out.println("SYNTAX ERROR: " + pe.getMessage());
-                    QueryParser.ReInit(System.in);
-                } catch (TokenMgrError tme) {
-                    System.out.println("PARSER ERROR: " + tme.getMessage());
-                    break;
-                } catch (IOException ioe) {
-                    System.out.println("STANDARD IN ERROR: " + ioe.getMessage());
-                    break;
-                } catch (NumberFormatException nfe) {
-                    System.out.println("PARSE ERROR: Failed to convert to Integer " + nfe.getMessage());
+    private static void initTitanDB() {
+        TitanFactory.Builder config = TitanFactory.build();
+        config.set("storage.backend", "berkeleyje");
+        config.set("storage.directory", "db/CarnotKE");
+        graph = config.open();
+        TitanManagement mg = graph.openManagement();
+        boolean initGraph = mg.getGraphIndex("byClassDef") == null;
+        if (initGraph) {
+            VertexLabel classLabel = mg.makeVertexLabel("classDef").make();
+            PropertyKey name = mg.makePropertyKey("name").dataType(String.class).make();
+            mg.buildIndex("byClassDef", Vertex.class).addKey(name).indexOnly(classLabel).buildCompositeIndex();
+        }
+        mg.commit();
+        if (initGraph) {
+            Vertex root = graph.addVertex(T.label, "classDef", "name", "root node");
+            graph.tx().commit();
+            rootID = root.id();
+        } else {
+            GraphTraversalSource g = graph.traversal();
+            g.V().hasLabel("classDef").forEachRemaining(n -> {
+                if (n.property("name").value().equals("root node")) {
+                    rootID = n.id();
                 }
-            }
-        } catch(Exception e) {
-            e.printStackTrace();
-            //System.out.println(e.getMessage());
-        } finally {
-            if (graph != null) {
-                graph.close();
+            });
+        }
+    }
+    private static void processInput() {
+        System.out.println("WDB + TitanDB 2.0");
+        System.out.println("Implemented by: Alvin Deng");
+        in = new BufferedReader(new InputStreamReader(System.in));
+        parser = new QueryParser(in);
+        Query q;
+        while (true) {
+            try {
+                if (!in.ready()) {
+                    System.out.print("\nWDB >");
+                }
+
+                q = parser.getNextQuery();
+                if (q == null) {
+                    break;
+                } else {
+                    processQuery(q);
+                }
+            } catch (ParseException pe) {
+                System.out.println("Syntax Error: " + pe.getMessage());
+                QueryParser.ReInit(System.in);
+            } catch (TokenMgrError tme) {
+                System.out.println("Parser Error: " + tme.getMessage());
+                break;
+            } catch (IOException ioe) {
+                System.out.println("Standard Input Error: " + ioe.getMessage());
+                break;
+            } catch (NumberFormatException nfe) {
+                System.out.println("Parse Error: Failed to convert to Integer " + nfe.getMessage());
             }
         }
     }
 
-    static private void processQuery(Query q) {
+    private static void processQuery(Query q) {
         if (q instanceof SourceQuery) {
             SourceQuery sq = (SourceQuery) q;
             processSourceQuery(sq);
@@ -124,12 +124,180 @@ public class TitanWDB {
         }
     }
 
+    private static Vertex getVertex(String classDef, String attribute, String value) {
+        Iterator<Vertex> vertices = graph.vertices();
+
+        while (vertices.hasNext()) {
+            Vertex nextV = vertices.next();
+            String currentLabel = nextV.label();
+            if (currentLabel.equals("entity") && nextV.property("class").value().equals(classDef)) {
+                if (nextV.property(attribute).value().toString().equals(value)) {
+                    return nextV;
+                }
+            }
+        }
+        return null;
+    }
+
+    private static String findInverseEdgeName(String classDefName, String edgeName) {
+        Iterator<Vertex> iter = graph.vertices();
+        while (iter.hasNext()) {
+            Vertex currentVertex = iter.next();
+            if (currentVertex.label().equals("attribute")) {
+                if (currentVertex.property("name").value().equals(edgeName)) {
+                    Iterator<Edge> edges = currentVertex.edges(Direction.OUT);
+                    while (edges.hasNext()) {
+                        Edge currentE = edges.next();
+                        String inverseEdgeName = currentE.inVertex().property("name").value().toString();
+                        if (currentE.inVertex().property("class").value().equals(classDefName)) {
+                            return inverseEdgeName;
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     private static void processModifyQuery(ModifyQuery mq) {
-        throw new UnsupportedOperationException();
+        GraphTraversalSource g = graph.traversal();
+        ArrayList<Vertex> instanceList = new ArrayList<>();
+        Iterator<Vertex> vertices = graph.vertices();
+        ArrayList<Vertex> modifyingVertex = new ArrayList<>();
+
+        while (vertices.hasNext()) {
+            Vertex nextV = vertices.next();
+            String currentLabel = nextV.label();
+            if (currentLabel.equals("entity") && nextV.property("class").value().equals(mq.className)) {
+                instanceList.add(nextV);
+            }
+        }
+
+        Vertex classDef = lookupClass(g, mq.className);
+        for (Vertex instance : instanceList) {
+            if (matches(g, classDef, mq.expression, instance)) {
+                modifyingVertex.add(instance);
+            }
+        }
+
+        for (Vertex startVertex : modifyingVertex) {
+            for (Assignment y : mq.assignmentList) {
+                EvaAssignment current = (EvaAssignment) y;
+                String[] targetArray = current.expression.jjtGetChild(0).toString().split(" ");
+                String targetAttribute = targetArray[0];
+                String targetValue = targetArray[2];
+                Vertex targetVertex = getVertex(current.targetClass, targetAttribute, targetValue);
+                String edgeName = y.AttributeName;
+                startVertex.addEdge(edgeName, targetVertex);
+
+                String inverseEdgeName = findInverseEdgeName(mq.className, edgeName);
+                assert targetVertex != null;
+                targetVertex.addEdge(inverseEdgeName, startVertex);
+            }
+
+
+        }
+
+        graph.tx().commit();
+    }
+
+    private static void debugInstances() {
+        System.out.println("debugInstances\n");
+        GraphTraversalSource g = graph.traversal();
+        g.V().hasLabel("entity").has("name").forEachRemaining(n -> {
+            System.out.println("Entity: " + n.property("name").value());
+            g.V(n.id()).properties().forEachRemaining(m -> System.out.println(m.key() + " " + m.value()));
+            System.out.println();
+        });
+    }
+
+    private static void debugAttributes() {
+        System.out.println("debugAttributes\n");
+        GraphTraversalSource g = graph.traversal();
+        g.V().hasLabel("attribute").has("name").forEachRemaining(n -> {
+            System.out.println("Attribute: " + n.property("name").value());
+            g.V(n.id()).properties().forEachRemaining(m -> System.out.println(m.key() + " " + m.value()));
+            System.out.println();
+        });
+    }
+
+    private static void debugClassDefs() {
+        System.out.println("debugClassDefs\n");
+        GraphTraversalSource g = graph.traversal();
+        g.V().hasLabel("classDef").has("name").forEachRemaining(n -> {
+            System.out.println("classDef: " + n.property("name").value());
+            g.V(n.id()).outE().forEachRemaining(m -> System.out.println("Keys: " + m.keys() + " " + m.inVertex().property("name").value()));
+            System.out.println();
+        });
+    }
+
+
+    private static void recurRetrieve(String classDef, ArrayList<Vertex> overall) {
+        Iterator<Vertex> vertices = graph.vertices();
+        HashSet<String> children = new HashSet<>();
+
+        while (vertices.hasNext()) {
+            Vertex nextV = vertices.next();
+            String currentLabel = nextV.label();
+            if (currentLabel.equals("classDef")) {
+                Iterator<Edge> iter = nextV.edges(Direction.OUT);
+                while (iter.hasNext()) {
+                    Edge currentE = iter.next();
+                    if (currentE.label().equals("subclasses")) {
+                        String inbound = currentE.inVertex().property("name").value().toString();
+                        if (inbound.equals(classDef)) {
+                            children.add(currentE.outVertex().property("name").value().toString());
+                        }
+                    }
+                }
+            }
+            if (currentLabel.equals("entity") && nextV.property("class").value().equals(classDef)) {
+                overall.add(nextV);
+            }
+        }
+
+        for (String x : children) {
+            recurRetrieve(x, overall);
+        }
     }
 
     private static void processRetrieveQuery(RetrieveQuery rq) {
-        throw new UnsupportedOperationException();
+        ArrayList<Vertex> overall = new ArrayList<>();
+
+        recurRetrieve(rq.className, overall);
+
+        for (Vertex instance : overall) {
+            for (int j = 0; j < rq.numAttributePaths(); j++) {
+                AttributePath path = rq.getAttributePath(j);
+                HashMap<Vertex, String> neighborMap = new HashMap<>();
+
+                for (int i = 0; i < path.levelsOfIndirection(); i++) {
+                    Iterator<Edge> iter = instance.edges(Direction.OUT);
+                    while (iter.hasNext()) {
+                        Edge current = iter.next();
+                        if (current.label().equals(path.getIndirection(i))) {
+                            if (!neighborMap.containsKey(current.inVertex())) {
+                                neighborMap.put(current.inVertex(), path.getIndirection(i));
+                            }
+                        }
+                    }
+                }
+
+                if (path.attribute.equals("*")) {
+                    Iterator<VertexProperty<Object>> it = instance.properties();
+                    while (it.hasNext()) {
+                        VertexProperty<Object> property = it.next();
+                        if (!property.key().equals("property")) {
+                            System.out.print(property.key() + "->" + property.value() + (it.hasNext() ? " | " : "\n"));
+                        }
+                    }
+                } else {
+                    for (Vertex current : neighborMap.keySet()) {
+                        System.out.print(neighborMap.get(current) + "_" + path.attribute + "->" + current.property(path.attribute).value() + (j == rq.numAttributePaths() - 1 ? "\n" : " | "));
+                    }
+                }
+            }
+        }
     }
 
     private static void processInsertQuery(InsertQuery iq) {
@@ -142,11 +310,10 @@ public class TitanWDB {
             }
             if (iq.fromClassName == null) {
                 // just inserting a new entity
-                Vertex entity = tx.addVertex(T.label, "entity", "class", iq.className);
+                Vertex entity = graph.addVertex(T.label, "entity", "class", iq.className);
                 newVertexCount++;
                 // make the entity an instance of the class
                 classDef.addEdge("instance", entity);
-
                 edgeCounts = doInsert(iq, g, classDef, entity);
             } else {
                 // inserting a subclass into an existing superclass
@@ -170,11 +337,10 @@ public class TitanWDB {
             }
 
             printUpdateQueryResults(newVertexCount, edgeCounts);
-            tx.commit();
-            System.out.println("Insert complete");
-        } catch(RuntimeException e) {
+            graph.tx().commit();
+        } catch (RuntimeException e) {
             System.err.println("Insert failed! Rolling back changes.");
-            tx.rollback();
+            graph.tx().rollback();
             throw e;
         }
     }
@@ -200,7 +366,7 @@ public class TitanWDB {
         setDefaultDVAs(g, classDef, entity);
         int[] counts = doAssignments(g, entity, classDef, iq);
         checkRequiredInserts(iq, g, classDef, entity);
-        checkEVARestrictions(iq, g, classDef, entity);
+//        checkEVARestrictions(iq, g, classDef, entity);
         return counts;
     }
 
@@ -238,30 +404,49 @@ public class TitanWDB {
         }
     }
 
+    private static Vertex getInverseEVA(Vertex classDef, String evaVertexName) {
+        Iterator<Edge> iter = classDef.edges(Direction.OUT);
+        while(iter.hasNext()) {
+            Edge currentE = iter.next();
+            if(currentE.label().equals("has")) {
+                if(currentE.inVertex().property("name").value().toString().equals(evaVertexName)) {
+                    return currentE.inVertex();
+                }
+            }
+        }
+        return null;
+    }
+
     // check if the insertion respects max number of references defined and distinctness restriction
     private static void checkEVARestrictions(InsertQuery iq, GraphTraversalSource g, Vertex classDef, Vertex entity) {
         GraphTraversal<Vertex, Vertex> evaAttrs = g.V(classDef.id()).outE("has").hasNot("isDVA").inV();
         while (evaAttrs.hasNext()) {
+
             Vertex evaVertex = evaAttrs.next();
-            Vertex inverseEVA = g.V(classDef.id()).out("inverse").next();
-            boolean singleValued = (Boolean) evaVertex.property("isSV").value();
-            boolean inverseSingleValued = (Boolean) inverseEVA.property("isSV").value();
+
+            /* Inverse Lookup */
+            Vertex inverseEVA = getInverseEVA(classDef, evaVertex.property("name").value().toString());
+
+            boolean singleValued = evaVertex.property("isSV").value().toString().equals("true");
+            assert inverseEVA != null;
+            boolean inverseSingleValued = inverseEVA.property("isSV").value().toString().equals("true");
             int maxReferences = singleValued ? 1 : (Integer) evaVertex.property("max").value();
             int inverseMaxReferences = inverseSingleValued ? 1 : (Integer) inverseEVA.property("max").value();
-            boolean checkDistinct = !singleValued && (Boolean) evaVertex.property("distinct").value();
-            boolean inverseCheckDistinct = !inverseSingleValued && (Boolean) inverseEVA.property("distinct").value();
+            boolean checkDistinct = !singleValued && evaVertex.property("distinct").value().toString().equals("true");
+            boolean inverseCheckDistinct = !inverseSingleValued && inverseEVA.property("distinct").value().toString().equals("true");
             Set<Object> connectedVertexIds = new HashSet<>();
-            String evaName = (String) evaVertex.property("name").value();
-            String inverseName = (String) inverseEVA.property("name").value();
+            String evaName = evaVertex.property("name").value().toString();
+            String inverseName = inverseEVA.property("name").value().toString();
             GraphTraversal<Vertex, Vertex> connections = g.V(entity.id()).out(evaName);
             int count = 0;
+
             while (connections.hasNext()) {
                 Vertex connection = connections.next();
                 if (checkDistinct && !connectedVertexIds.add(connection.id())) {
                     // we need to check for distinctness and connected vertices failed to add
                     // (and thus we have a duplicate)
                     throwException("EVA %s is DISTINCT but class %s entity %s " +
-                            "references class %s entity %s more than once!",
+                                    "references class %s entity %s more than once!",
                             evaName, iq.className, entity.id(),
                             evaVertex.property("class").value(), connection.id());
                 }
@@ -274,7 +459,7 @@ public class TitanWDB {
                 while (inverses.hasNext()) {
                     if (inverseCheckDistinct && inverseCount > 0) {
                         throwException("Eva %s is DISTINCT but class %s entity %s " +
-                            "references class %s entity %s more than once!",
+                                        "references class %s entity %s more than once!",
                                 inverseName, evaVertex.property("class").value(), connection.id(),
                                 iq.className, entity.id());
                     }
@@ -311,11 +496,12 @@ public class TitanWDB {
                     throwException("EVA %s cannot be assigned from class %s to class %s!",
                             assignment.AttributeName, query.className, evaClass);
                 }
-
+                System.out.println("evaClassDef: " + evaClass);
                 Vertex evaClassDef = lookupClass(g, evaClass);
                 if (evaClassDef == null) {
                     throwException("Class %s is not defined!", evaClass);
                 }
+                System.out.println("Getting Instances");
                 Set<Vertex> instances = getInstances(g, evaClassDef, query.expression);
                 String evaInverseName = (String) g.V(evaClassDef.id()).out("inverse").next().property("name").value();
                 switch (evaAssignment.mode) {
@@ -387,6 +573,7 @@ public class TitanWDB {
         GraphTraversal<Vertex, Vertex> instances = g.V(classDef.id()).out("instance");
         while (instances.hasNext()) {
             Vertex instance = instances.next();
+            System.out.println("getInstances Instance: " + instance.property("name").value());
             if (matches(g, classDef, expression, instance)) {
                 res.add(instance);
             }
@@ -394,6 +581,7 @@ public class TitanWDB {
 
         GraphTraversal<Vertex, Vertex> subclasses = g.V(classDef.id()).out("superclasses");
         while (subclasses.hasNext()) {
+            System.out.println("yes");
             res.addAll(getInstances(g, subclasses.next(), expression));
         }
         return res;
@@ -407,6 +595,8 @@ public class TitanWDB {
             String[] split = expression.toString().split(" ", 3);
             String attributeName = split[0];
             Vertex attrVertex = getAttribute(g, classDef, true, attributeName);
+//            System.out.println("Condition Attribute Name: " + attributeName);
+//            System.out.println("Condition classDef Name: " + classDef.property("name").value());
             if (attrVertex == null) {
                 throwException("Class %s doesn't have attribute %s!", classDef.property("name"), attributeName);
             }
@@ -415,31 +605,31 @@ public class TitanWDB {
             String quantifier = split[1];
             String value = split[2];
             switch (quantifier) {
-                case "=" : {
+                case "=": {
                     return attribute == null && value.equals("NULL") ||
                             attribute != null && attribute.toString().equals(value);
                 }
-                case "<>" : {
+                case "<>": {
                     return attribute == null && !value.equals("NULL") ||
                             attribute != null && !attribute.toString().equals(value);
                 }
-                case "<" : {
+                case "<": {
                     checkAttributeIsInteger(attributeName, attrVertex, quantifier);
                     return attribute != null && ((Integer) attribute) < Integer.parseInt(value);
                 }
-                case ">" : {
+                case ">": {
                     checkAttributeIsInteger(attributeName, attrVertex, quantifier);
                     return attribute != null && ((Integer) attribute) > Integer.parseInt(value);
                 }
-                case "<=" : {
+                case "<=": {
                     checkAttributeIsInteger(attributeName, attrVertex, quantifier);
                     return attribute != null && ((Integer) attribute) <= Integer.parseInt(value);
                 }
-                case ">=" : {
+                case ">=": {
                     checkAttributeIsInteger(attributeName, attrVertex, quantifier);
                     return attribute != null && ((Integer) attribute) >= Integer.parseInt(value);
                 }
-                default : {
+                default: {
                     throwException("Invalid quantifier %s!", quantifier);
                 }
             }
@@ -481,7 +671,7 @@ public class TitanWDB {
     private static void checkAttributeIsInteger(String attributeName, Vertex attrVertex, String quantifier) {
         String data_type = (String) attrVertex.property("data_type").value();
         if (!data_type.equals("integer")) {
-            throwException("Cannot compare attribute %s of type %s with quantifer '%s'",
+            throwException("Cannot compare attribute %s of type %s with quantifier '%s'",
                     attributeName, data_type, quantifier);
         }
     }
@@ -508,24 +698,24 @@ public class TitanWDB {
     private static void checkAssignmentType(UpdateQuery query, String name, Vertex attrVertex, DvaAssignment dvaAssignment) {
         String type = (String) attrVertex.property("data_type").value();
         switch (type) {
-            case "boolean" : {
+            case "boolean": {
                 if (!(dvaAssignment.Value instanceof Boolean)) {
                     throwException("Attribute %s of class %s stores boolean values! Found %s",
-                                    name, query.className, dvaAssignment.Value);
+                            name, query.className, dvaAssignment.Value);
                 }
                 break;
             }
-            case "integer" : {
+            case "integer": {
                 if (!(dvaAssignment.Value instanceof Integer)) {
                     throwException("Attribute %s of class %s stores integer values! Found %s",
-                                    name, query.className, dvaAssignment.Value);
+                            name, query.className, dvaAssignment.Value);
                 }
                 break;
             }
-            case "string" : {
+            case "string": {
                 if (!(dvaAssignment.Value instanceof String)) {
                     throwException("Attribute %s of class %s stores string values! Found %s",
-                                    name, query.className, dvaAssignment.Value);
+                            name, query.className, dvaAssignment.Value);
                 }
                 break;
             }
@@ -556,17 +746,25 @@ public class TitanWDB {
         GraphTraversalSource g = graph.traversal();
         try {
             cd.name = cd.name.toLowerCase();
-            if (lookupClass(g, cd.name) != null) {
+            TitanVertex currentVertex = (TitanVertex) lookupClass(g, cd.name);
+            if ((currentVertex != null && !currentVertex.property("ForwardInit").isPresent()) || (currentVertex != null && currentVertex.property("ForwardInit").value().equals("No"))) {
                 throwException("Class %s already exists!\n", cd.name);
             }
-            TitanVertex newClass = tx.addVertex(T.label, "classDef", "name", cd.name);
+            TitanVertex newClass;
+            if (currentVertex == null) {
+                newClass = graph.addVertex(T.label, "classDef", "name", cd.name);
+            } else {
+                currentVertex.property("ForwardInit", "No");
+                newClass = currentVertex;
+            }
+
             if (cd.comment != null) {
                 newClass.property("comment", cd.comment);
             }
             for (int i = 0; i < cd.numberOfAttributes(); i++) {
                 Attribute attr = cd.getAttribute(i);
                 attr.name = attr.name.toLowerCase();
-                TitanVertex attrVertex = tx.addVertex(T.label, "attribute", "name", attr.name);
+                TitanVertex attrVertex = graph.addVertex(T.label, "attribute", "name", attr.name);
                 if (attr.comment != null) {
                     attrVertex.property("comment", attr.comment);
                 }
@@ -577,24 +775,33 @@ public class TitanWDB {
                     attrEdge.property("required", true);
                 }
 
-                if (attr instanceof DVA) {
+                if (attr instanceof DVA) /* Simple Attribute */ {
                     attrEdge.property("isDVA", true);
                     DVA dva = (DVA) attr;
                     attrVertex.property("data_type", dva.type.toLowerCase());
                     if (dva.initialValue != null) {
                         attrVertex.property("default_value", dva.initialValue);
                     }
-                } else if (attr instanceof EVA) {
+                } else if (attr instanceof EVA) /* This is a classDef */ {
                     EVA eva = (EVA) attr;
                     eva.baseClassName = eva.baseClassName.toLowerCase();
                     eva.inverseEVA = eva.inverseEVA.toLowerCase();
                     Vertex targetClass = lookupClass(g, eva.baseClassName);
+
                     if (targetClass == null) {
-                        throwException("Class %s cannot create a relationship with %s because %2$s does not exist!",
-                                cd.name, eva.baseClassName);
+                        targetClass = graph.addVertex(T.label, "classDef", "name", eva.baseClassName);
+                        targetClass.property("ForwardInit", "Yes");
+
+                        GraphTraversal<Vertex, Vertex> traversal = g.V().hasLabel("classDef").has("name", "root node");
+                        Vertex root = traversal.next();
+                        targetClass.addEdge("subclasses", root);
+                        root.addEdge("superclasses", targetClass);
+//                        throwException("Class %s cannot create a relationship with %s because %2$s does not exist!",
+//                                cd.name, eva.baseClassName);
                     }
+
                     attrVertex.property("class", eva.baseClassName, "isSV", eva.cardinality.equals(EVA.SINGLEVALUED));
-                    TitanVertex inverseVertex = tx.addVertex(T.label, "attribute",
+                    TitanVertex inverseVertex = graph.addVertex(T.label, "attribute",
                             "name", eva.inverseEVA, "class", cd.name, "isSV", true);
                     if (attr.comment != null) {
                         inverseVertex.property("comment", attr.comment);
@@ -603,14 +810,19 @@ public class TitanWDB {
                     if (required) {
                         inverseEdge.property("required", true);
                     }
+
                     attrVertex.addEdge("inverse", inverseVertex);
                     inverseVertex.addEdge("inverse", attrVertex);
+
                     if (eva.distinct != null) {
                         attrVertex.property("distinct", eva.distinct);
                     }
                     if (eva.max != null) {
                         attrVertex.property("max", eva.max);
                     }
+
+                    graph.tx().commit();
+
                 } else {
                     throwException("Attribute %s is not a DVA or an EVA!", attr);
                 }
@@ -648,25 +860,27 @@ public class TitanWDB {
             } else {
                 GraphTraversal<Vertex, Vertex> traversal = g.V().hasLabel("classDef").has("name", "root node");
                 Vertex root = traversal.next();
-                newClass.addEdge("subclasses", root);
-                root.addEdge("superclasses", newClass);
+
+                boolean found = false;
+                Iterator<Edge> iter = newClass.edges(Direction.IN);
+                while (iter.hasNext()) {
+                    Edge x = iter.next();
+                    if (x.outVertex().property("name").value().equals("root node")) {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found) {
+                    newClass.addEdge("subclasses", root);
+                    root.addEdge("superclasses", newClass);
+                }
             }
 
-            tx.commit();
+            graph.tx().commit();
             System.out.printf("Class %s defined\n", cd.name);
-            /*
-            g.V().hasLabel("classDef").has("name").forEachRemaining(n -> {
-                System.out.println(n.label());
-                g.V(n.id()).outE().forEachRemaining(m -> {
-                    System.out.println(m.label());
-                    g.E(m.id()).properties().forEachRemaining(o -> System.out.println(o));
-                });
-                g.V(n.id()).properties().forEachRemaining(m -> System.out.println(m));
-            });
-            //*/
-            System.out.println(lookupClass(graph.traversal(), cd.name));
         } catch (RuntimeException e) {
-            tx.rollback();
+            graph.tx().rollback();
             throw e;
         }
     }
@@ -684,7 +898,7 @@ public class TitanWDB {
                     } else {
                         processQuery(fq);
                     }
-                } catch(RuntimeException e) {
+                } catch (RuntimeException e) {
                     sourceExceptions.add(e);
                 }
             }
@@ -695,11 +909,11 @@ public class TitanWDB {
                 }
             }
         } catch (FileNotFoundException e) {
-            System.out.println("FILE OPEN ERROR: " + e.getMessage());
+            System.out.println("File Open Error: " + e.getMessage());
         } catch (ParseException pe) {
-            System.out.println("SYNTAX ERROR: " + pe.getMessage());
+            System.out.println("Syntax Error: " + pe.getMessage());
         } catch (TokenMgrError tme) {
-            System.out.println("PARSER ERROR: " + tme.getMessage());
+            System.out.println("Parser Error: " + tme.getMessage());
         } finally {
             QueryParser.ReInit(in);
         }

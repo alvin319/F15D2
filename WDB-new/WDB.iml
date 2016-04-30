@@ -14,12 +14,15 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/je.jar!/" />
+          <root url="file://$MODULE_DIR$/../titan-1.0.0-hadoop1/lib" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/../titan-1.0.0-hadoop1/lib" />
+        </SOURCES>
+        <jarDirectory url="file://$MODULE_DIR$/../titan-1.0.0-hadoop1/lib" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/../titan-1.0.0-hadoop1/lib" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="titan-1.0.0-hadoop1" level="project" />
   </component>
 </module>

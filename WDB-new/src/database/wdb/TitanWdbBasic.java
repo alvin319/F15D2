@@ -18,7 +18,7 @@ import java.util.*;
 /**
  * Created by Raymond on 11/16/2015.
  */
-public class TitanWdbBasic {
+public class TitanWDBBasic {
     public static BufferedReader in = null;
     public static QueryParser parser = null;
     public static TitanGraph graph = null;
