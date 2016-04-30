@@ -67,10 +67,10 @@ emp_id := 6 , hire_date := "hire_date6" , salary := 1006 , status := "status6" ,
 
 INSERT SIM_manager ( person_id := 7 , name := "manager1" , ssnum := "ssnum7" , gender := "gender7" ,
 birth_date := "birth_date7" , address := "address7" , city := "city7" , state := "state7" , zip := "zip7" ,
-emp_id := 7 , hire_date := "hire_date7" , salary := 1007 , status := "status7" , title := "title7" , bonus := "bonus7" );
+emp_id := 7 , hire_date := "hire_date7" , salary := 1007 , status := "status7" , title := "title7" , bonus := 7 );
 INSERT SIM_manager ( person_id := 8 , name := "manager2" , ssnum := "ssnum8" , gender := "gender8" ,
 birth_date := "birth_date8" , address := "address8" , city := "city8" , state := "state8" , zip := "zip8" ,
-emp_id := 8 , hire_date := "hire_date8" , salary := 1008 , status := "status8" , title := "title8" , bonus := "bonus8" );
+emp_id := 8 , hire_date := "hire_date8" , salary := 1008 , status := "status8" , title := "title8" , bonus := 8 );
 
 insert SIM_dept( dept_id := 1 , name := "department1" , location := "location1" );
 insert SIM_dept( dept_id := 2 , name := "department2" , location := "location2" );
